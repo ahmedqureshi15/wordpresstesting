@@ -1,4 +1,4 @@
-/*! elementor-pro - v2.4.2 - 25-01-2019 */
+/*! elementor-pro - v2.4.5 - 18-02-2019 */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -1132,7 +1132,7 @@ var _class = function (_elementorModules$Mod) {
 			document.getModal().hide();
 
 			if (settings.do_not_show_again) {
-				document.setStorage('disable', true);
+				document.disable();
 			}
 		}
 	}]);
@@ -1203,7 +1203,7 @@ var _class = function (_elementorModules$fro) {
 				return;
 			}
 
-			if (elementorFrontend.isWPPreviewMode()) {
+			if (elementorFrontend.isWPPreviewMode() && elementorFrontend.config.post.id === this.getSettings('id')) {
 				this.showModal();
 
 				return;
@@ -1322,7 +1322,7 @@ var _class = function (_elementorModules$fro) {
 							}
 						},
 						onHide: function onHide() {
-							return _this2.$element.remove();
+							_this2.$element.remove();
 						}
 					});
 
@@ -1350,6 +1350,11 @@ var _class = function (_elementorModules$fro) {
 			    $closeButton = modal.getElements('closeButton');
 
 			$closeButton.appendTo(modal.getElements('outside' === closeButtonPosition ? 'widget' : 'widgetContent'));
+		}
+	}, {
+		key: 'disable',
+		value: function disable() {
+			this.setStorage('disable', true);
 		}
 	}, {
 		key: 'setStorage',
