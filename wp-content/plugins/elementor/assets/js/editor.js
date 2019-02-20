@@ -1,4 +1,4 @@
-/*! elementor - v2.4.4 - 24-01-2019 */
+/*! elementor - v2.4.7 - 18-02-2019 */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -3626,8 +3626,9 @@ var AddSectionBase = function (_Marionette$ItemView) {
 
 			var selectedStructure = event.currentTarget.dataset.structure,
 			    parsedStructure = elementor.presetsFactory.getParsedStructure(selectedStructure),
-			    elements = [],
-			    loopIndex;
+			    elements = [];
+
+			var loopIndex = void 0;
 
 			for (loopIndex = 0; loopIndex < parsedStructure.columnsCount; loopIndex++) {
 				elements.push({
@@ -3642,9 +3643,11 @@ var AddSectionBase = function (_Marionette$ItemView) {
 				elType: 'section'
 			});
 
-			var newSection = this.addSection({ elements: elements });
+			var newSection = this.addSection({ elements: elements }, { edit: false });
 
 			newSection.setStructure(selectedStructure);
+
+			newSection.getEditModel().trigger('request:edit');
 
 			elementor.channels.data.trigger('element:after:add');
 		}
@@ -5884,7 +5887,7 @@ var App = Marionette.Application.extend({
 
 		setTimeout(console.log.bind(console, text, style)); // eslint-disable-line
 
-		text = '%cLove using Elementor? Join our growing community of Elementor developers: %chttps://github.com/pojome/elementor';
+		text = '%cLove using Elementor? Join our growing community of Elementor developers: %chttps://github.com/elementor/elementor';
 
 		setTimeout(console.log.bind(console, text, 'color: #9B0A46', '')); // eslint-disable-line
 	},
