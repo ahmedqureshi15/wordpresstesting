@@ -164,8 +164,10 @@
 		var $tour_item 		= $scope.find( '.uael-hotspot-main-' + id );
 		var $item_num 		= $tour_item.data( 'uaeltour' );
 		var tour_interval 	= $this.data( 'tourinterval' );
+		var action_autoplay = $this.data( 'autoaction' );
 		var sid;
 		var	scrolling = false;
+		var viewport_position	= $this.data( 'hotspotviewport' );
 
 		if( 'custom' == trigger ) {
 			passtrigger = 'click';
@@ -205,6 +207,7 @@
 
 		// Tooltip execution for tour functionality.
 		function sectionInterval() {
+
 			myInterval[ id ] = setInterval( function() {
 				sid = $( '.uael-hotspot-main-' + id + '.open' ).data( 'uaeltour' );
 
@@ -318,10 +321,16 @@
 			$( '.uael-tour-end-' + id ).off('click.endtour').on( 'click.endtour', function(e) {
 				clearInterval( myInterval[ id ] );
 				e.preventDefault();
+				
 				$('.uael-hotspot-main-' + id + '.open').tooltipster( 'close' );
 				$('.uael-hotspot-main-' + id + '.open').removeClass( 'open' );
-				buttonOverlay();
-				$( overlay_id ).show();
+
+				if( 'auto' == action_autoplay && 'yes' == autoplay ) {
+					$( '.uael-hotspot-main-' + id ).css( "pointer-events", "none" );
+				} else {
+					buttonOverlay();
+					$( overlay_id ).show();
+				}
 			});
 
 			// Add & remove open class for tooltip.
@@ -374,6 +383,19 @@
 							});	
 						}
 					}
+				} else if( 'auto' == action_autoplay && 'yes' == autoplay ) {
+					if( ! isElEditMode ) {
+
+						if( typeof elementorFrontend.waypoint !== 'undefined' ) {
+							elementorFrontend.waypoint(
+								$this,
+								tourPlay,
+								{
+									offset: viewport_position + '%'
+								}
+							);
+						}
+					}
 				} else {
 					tourPlay();
 				}
@@ -382,6 +404,7 @@
 
 		// Start of hotspot functionality.
 		if( 'custom' == trigger ) {
+
 			var overlay_id 	= $scope.find( '.uael-hotspot-overlay' );
 			var button_id 	= $scope.find( '.uael-overlay-button' );
 			buttonOverlay();	

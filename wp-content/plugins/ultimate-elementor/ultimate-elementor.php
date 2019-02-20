@@ -4,7 +4,7 @@
  * Plugin URI: https://uaelementor.com/
  * Author: Brainstorm Force
  * Author URI: https://www.brainstormforce.com
- * Version: 1.9.0
+ * Version: 1.9.1
  * Description: Ultimate Addons is a premium extension for Elementor that adds 20 modules and works on top of any Elementor Package (Free, Pro). You can use it with any WordPress theme.
  * Text Domain: uael
  *

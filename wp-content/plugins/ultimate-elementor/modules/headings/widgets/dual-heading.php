@@ -290,7 +290,7 @@ class Dual_Heading extends Common_Widget {
 		$this->start_controls_section(
 			'heading_style_fields',
 			[
-				'label' => __( 'Style', 'uael' ),
+				'label' => __( 'Heading Style', 'uael' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);

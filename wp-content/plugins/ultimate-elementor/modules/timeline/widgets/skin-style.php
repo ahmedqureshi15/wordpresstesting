@@ -267,6 +267,7 @@ class Skin_Style {
 		$page_id      = \Elementor\Plugin::$instance->documents->get_current()->get_main_id();
 		$is_editor    = \Elementor\Plugin::instance()->editor->is_edit_mode();
 		$dynamic_date = $settings['post_timeline_date_text'];
+		$custom_meta  = '';
 
 		if ( ! $query->have_posts() ) {
 
@@ -371,7 +372,11 @@ class Skin_Style {
 														<p>
 														<?php
 														if ( '' != $dynamic_date ) {
-															echo get_post_meta( $post_id, $dynamic_date, 'true' ); }
+															echo get_post_meta( $post_id, $dynamic_date, 'true' );
+														} else {
+															$custom_meta = apply_filters( 'uael_timeline_date_content', $post_id, $settings );
+															echo $custom_meta;
+														}
 														?>
 														</p>
 													<?php } ?>
@@ -414,7 +419,11 @@ class Skin_Style {
 												<p>
 												<?php
 												if ( '' != $dynamic_date ) {
-													echo get_post_meta( $post_id, $dynamic_date, 'true' ); }
+													echo get_post_meta( $post_id, $dynamic_date, 'true' );
+												} else {
+													$custom_meta = apply_filters( 'uael_timeline_date_content', $post_id, $settings );
+													echo $custom_meta;
+												}
 												?>
 												</p>
 											<?php } ?>

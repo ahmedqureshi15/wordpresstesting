@@ -378,15 +378,6 @@ class Business_Hours extends Common_Widget {
 			]
 		);
 
-		// Business day styling note.
-		$this->add_control(
-			'bs_note_heading',
-			[
-				'type' => Controls_Manager::RAW_HTML,
-				'raw'  => sprintf( '<p style="font-size: 12px;font-style: italic;line-height: 1.4;color: #a4afb7;">%s</p>', __( 'Note: By default, the color & typography options will inherit from parent styling. If you wish you can override that styling from here.', 'uael' ) ),
-			]
-		);
-
 		// Business Day Alignment.
 		$this->add_responsive_control(
 			'business_hours_day_align',

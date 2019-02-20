@@ -1,3 +1,9 @@
+Version 1.9.1 - Thursday, 31st January 2019
+- Improvement: Hotspot - Added an option to launch the tour when widget enters in viewport.
+- Improvement: Timeline - Provided a filter for custom meta key field.
+- Fix: Hotspot - Changed dependency of marker text field.
+- Fix: Hotspot - Fixed marker link issue.
+
 Version 1.9.0 - Tuesday, 29th January 2019
 - New: Introduced Hotspot Widget.
 - Improvement: Gravity form styler - Added support to consent field.

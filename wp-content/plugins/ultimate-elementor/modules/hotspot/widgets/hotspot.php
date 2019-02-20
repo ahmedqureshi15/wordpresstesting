@@ -194,11 +194,8 @@ class Hotspot extends Common_Widget {
 						[
 							'default'   => __( 'Marker Text', 'uael' ),
 							'type'      => Controls_Manager::TEXT,
-							'label'     => __( 'Text', 'uael' ),
+							'label'     => __( 'Title', 'uael' ),
 							'separator' => 'none',
-							'condition' => [
-								'hotspot' => 'text',
-							],
 						]
 					);
 
@@ -505,7 +502,8 @@ class Hotspot extends Common_Widget {
 		$this->add_control(
 			'tour_interval',
 			[
-				'label'              => __( 'Tour Interval (Sec)', 'uael' ),
+				'label'              => __( 'Interval between Tooltips (sec)', 'uael' ),
+				'description'        => __( 'Next tooltip will be displayed after this time interval', 'uael' ),
 				'type'               => Controls_Manager::SLIDER,
 				'range'              => [
 					'sec' => [
@@ -527,6 +525,23 @@ class Hotspot extends Common_Widget {
 		);
 
 		$this->add_control(
+			'autoplay_options',
+			[
+				'label'     => __( 'Launch Tour', 'uael' ),
+				'type'      => Controls_Manager::SELECT,
+				'default'   => 'click',
+				'options'   => [
+					'click' => __( 'On Button Click', 'uael' ),
+					'auto'  => __( 'When Widget is in Viewport', 'uael' ),
+				],
+				'condition' => [
+					'hotspot_tour'          => 'yes',
+					'hotspot_tour_autoplay' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
 			'overlay_button_heading',
 			[
 				'label'     => __( 'Overlay Button', 'uael' ),
@@ -535,6 +550,7 @@ class Hotspot extends Common_Widget {
 				'condition' => [
 					'hotspot_tour'          => 'yes',
 					'hotspot_tour_autoplay' => 'yes',
+					'autoplay_options'      => 'click',
 				],
 			]
 		);
@@ -548,6 +564,7 @@ class Hotspot extends Common_Widget {
 				'condition' => [
 					'hotspot_tour'          => 'yes',
 					'hotspot_tour_autoplay' => 'yes',
+					'autoplay_options'      => 'click',
 				],
 			]
 		);
@@ -568,6 +585,7 @@ class Hotspot extends Common_Widget {
 				'condition' => [
 					'hotspot_tour'          => 'yes',
 					'hotspot_tour_autoplay' => 'yes',
+					'autoplay_options'      => 'click',
 				],
 			]
 		);
@@ -587,6 +605,7 @@ class Hotspot extends Common_Widget {
 				'condition' => [
 					'hotspot_tour'          => 'yes',
 					'hotspot_tour_autoplay' => 'yes',
+					'autoplay_options'      => 'click',
 				],
 				'selectors' => [
 					'{{WRAPPER}} .uael-overlay-button' => 'left: {{SIZE}}%; transform: translate(-{{SIZE}}%, 0);',
@@ -609,6 +628,7 @@ class Hotspot extends Common_Widget {
 				'condition' => [
 					'hotspot_tour'          => 'yes',
 					'hotspot_tour_autoplay' => 'yes',
+					'autoplay_options'      => 'click',
 				],
 				'selectors' => [
 					'{{WRAPPER}} .uael-overlay-button' => 'top: {{SIZE}}%; transform: translate(0, -{{SIZE}}%);',
@@ -641,6 +661,16 @@ class Hotspot extends Common_Widget {
 						'type'            => Controls_Manager::RAW_HTML,
 						/* translators: %1$s Doc Link */
 						'raw'             => sprintf( __( '%1$s Getting started article » %2$s', 'uael' ), '<a href="https://uaelementor.com/docs/hotspot-widget/?utm_source=uael-pro-dashboard&utm_medium=uael-editor-screen&utm_campaign=uael-pro-plugin" target="_blank" rel="noopener">', '</a>' ),
+						'content_classes' => 'uael-editor-doc',
+					]
+				);
+
+				$this->add_control(
+					'help_doc_6',
+					[
+						'type'            => Controls_Manager::RAW_HTML,
+						/* translators: %1$s Doc Link */
+						'raw'             => sprintf( __( '%1$s How Hotspot Tour works? » %2$s', 'uael' ), '<a href="https://uaelementor.com/docs/how-hotspot-tour-works/?utm_source=uael-pro-dashboard&utm_medium=uael-editor-screen&utm_campaign=uael-pro-plugin" target="_blank" rel="noopener">', '</a>' ),
 						'content_classes' => 'uael-editor-doc',
 					]
 				);
@@ -1337,6 +1367,7 @@ class Hotspot extends Common_Widget {
 					'hotspot_tooltip_data'  => 'yes',
 					'hotspot_tour'          => 'yes',
 					'hotspot_tour_autoplay' => 'yes',
+					'autoplay_options'      => 'click',
 				],
 			]
 		);
@@ -1353,6 +1384,7 @@ class Hotspot extends Common_Widget {
 					'condition' => [
 						'hotspot_tour'          => 'yes',
 						'hotspot_tour_autoplay' => 'yes',
+						'autoplay_options'      => 'click',
 					],
 				]
 			);
@@ -1366,6 +1398,7 @@ class Hotspot extends Common_Widget {
 					'condition' => [
 						'hotspot_tour'          => 'yes',
 						'hotspot_tour_autoplay' => 'yes',
+						'autoplay_options'      => 'click',
 					],
 				]
 			);
@@ -1373,9 +1406,14 @@ class Hotspot extends Common_Widget {
 			$this->add_group_control(
 				Group_Control_Typography::get_type(),
 				[
-					'name'     => 'overlay_button_typography',
-					'label'    => __( 'Typography', 'uael' ),
-					'selector' => '{{WRAPPER}} a.elementor-button, {{WRAPPER}} .elementor-button',
+					'name'      => 'overlay_button_typography',
+					'label'     => __( 'Typography', 'uael' ),
+					'selector'  => '{{WRAPPER}} a.elementor-button, {{WRAPPER}} .elementor-button',
+					'condition' => [
+						'hotspot_tour'          => 'yes',
+						'hotspot_tour_autoplay' => 'yes',
+						'autoplay_options'      => 'click',
+					],
 				]
 			);
 
@@ -1391,6 +1429,7 @@ class Hotspot extends Common_Widget {
 					'condition'  => [
 						'hotspot_tour'          => 'yes',
 						'hotspot_tour_autoplay' => 'yes',
+						'autoplay_options'      => 'click',
 					],
 				]
 			);
@@ -1404,6 +1443,7 @@ class Hotspot extends Common_Widget {
 						'condition' => [
 							'hotspot_tour'          => 'yes',
 							'hotspot_tour_autoplay' => 'yes',
+							'autoplay_options'      => 'click',
 						],
 					]
 				);
@@ -1416,6 +1456,7 @@ class Hotspot extends Common_Widget {
 							'condition' => [
 								'hotspot_tour'          => 'yes',
 								'hotspot_tour_autoplay' => 'yes',
+								'autoplay_options'      => 'click',
 							],
 							'selectors' => [
 								'{{WRAPPER}} a.elementor-button, {{WRAPPER}} .elementor-button' => 'color: {{VALUE}};',
@@ -1432,6 +1473,7 @@ class Hotspot extends Common_Widget {
 							'condition'      => [
 								'hotspot_tour'          => 'yes',
 								'hotspot_tour_autoplay' => 'yes',
+								'autoplay_options'      => 'click',
 							],
 							'fields_options' => [
 								'color' => [
@@ -1452,6 +1494,7 @@ class Hotspot extends Common_Widget {
 							'condition' => [
 								'hotspot_tour'          => 'yes',
 								'hotspot_tour_autoplay' => 'yes',
+								'autoplay_options'      => 'click',
 							],
 						]
 					);
@@ -1475,6 +1518,7 @@ class Hotspot extends Common_Widget {
 							'condition'  => [
 								'hotspot_tour'          => 'yes',
 								'hotspot_tour_autoplay' => 'yes',
+								'autoplay_options'      => 'click',
 							],
 						]
 					);
@@ -1487,6 +1531,7 @@ class Hotspot extends Common_Widget {
 							'condition' => [
 								'hotspot_tour'          => 'yes',
 								'hotspot_tour_autoplay' => 'yes',
+								'autoplay_options'      => 'click',
 							],
 						]
 					);
@@ -1500,6 +1545,7 @@ class Hotspot extends Common_Widget {
 						'condition' => [
 							'hotspot_tour'          => 'yes',
 							'hotspot_tour_autoplay' => 'yes',
+							'autoplay_options'      => 'click',
 						],
 					]
 				);
@@ -1511,6 +1557,7 @@ class Hotspot extends Common_Widget {
 							'condition' => [
 								'hotspot_tour'          => 'yes',
 								'hotspot_tour_autoplay' => 'yes',
+								'autoplay_options'      => 'click',
 							],
 							'selectors' => [
 								'{{WRAPPER}} a.elementor-button:hover, {{WRAPPER}} .elementor-button:hover' => 'color: {{VALUE}};',
@@ -1527,6 +1574,7 @@ class Hotspot extends Common_Widget {
 							'condition'      => [
 								'hotspot_tour'          => 'yes',
 								'hotspot_tour_autoplay' => 'yes',
+								'autoplay_options'      => 'click',
 							],
 							'fields_options' => [
 								'color' => [
@@ -1547,6 +1595,7 @@ class Hotspot extends Common_Widget {
 							'condition' => [
 								'hotspot_tour'          => 'yes',
 								'hotspot_tour_autoplay' => 'yes',
+								'autoplay_options'      => 'click',
 							],
 							'selectors' => [
 								'{{WRAPPER}} a.elementor-button:hover, {{WRAPPER}} .elementor-button:hover' => 'border-color: {{VALUE}};',
@@ -1573,18 +1622,20 @@ class Hotspot extends Common_Widget {
 
 		$marker_length = sizeof( $settings['hotspots_list'] );
 
-		$side          = $settings['position'];
-		$trigger       = '';
-		$tour_autoplay = '';
-		$tour_repeat   = '';
-		$tour_overlay  = '';
-		$arrow         = $settings['arrow'];
-		$animation     = $settings['tooltip_anim'];
-		$zindex        = ( 'yes' == $settings['hotspot_tooltip_adv'] ) ? $settings['zindex'] : 99;
-		$interval_val  = $settings['tour_interval']['size'];
-		$delay         = 300;
-		$anim_duration = ( 'yes' == $settings['hotspot_tooltip_adv'] ) ? $settings['anim_duration']['size'] : 350;
-		$distance      = ( '' != $settings['distance']['size'] ) ? $settings['distance']['size'] : 6;
+		$side             = $settings['position'];
+		$trigger          = '';
+		$tour_autoplay    = '';
+		$tour_repeat      = '';
+		$tour_overlay     = '';
+		$arrow            = $settings['arrow'];
+		$animation        = $settings['tooltip_anim'];
+		$zindex           = ( 'yes' == $settings['hotspot_tooltip_adv'] ) ? $settings['zindex'] : 99;
+		$interval_val     = $settings['tour_interval']['size'];
+		$delay            = 300;
+		$anim_duration    = ( 'yes' == $settings['hotspot_tooltip_adv'] ) ? $settings['anim_duration']['size'] : 350;
+		$distance         = ( '' != $settings['distance']['size'] ) ? $settings['distance']['size'] : 6;
+		$action_auto      = ( 'auto' == $settings['autoplay_options'] ) ? 'auto' : '';
+		$hotspot_viewport = 90;
 
 		if ( '' == $interval_val ) {
 			$tour_interval = 4000;
@@ -1597,7 +1648,7 @@ class Hotspot extends Common_Widget {
 
 			if ( 'yes' == $settings['hotspot_tour_autoplay'] ) {
 				$tour_autoplay = 'yes';
-				$tour_overlay  = 'yes';
+				$tour_overlay  = ( 'click' == $settings['autoplay_options'] ) ? 'yes' : 'no';
 				if ( 'yes' == $settings['hotspot_tour_repeat'] ) {
 					$tour_repeat = 'yes';
 				} else {
@@ -1620,6 +1671,8 @@ class Hotspot extends Common_Widget {
 			}
 		}
 
+		$hotspot_viewport = apply_filters( 'uael_hotspot_viewport', $hotspot_viewport );
+
 		$data_attr  = 'data-side="' . $side . '" ';
 		$data_attr .= 'data-hotspottrigger="' . $trigger . '" ';
 		$data_attr .= 'data-arrow="' . $arrow . '" ';
@@ -1633,6 +1686,8 @@ class Hotspot extends Common_Widget {
 		$data_attr .= 'data-repeat="' . $tour_repeat . '" ';
 		$data_attr .= 'data-tourinterval="' . $tour_interval . '" ';
 		$data_attr .= 'data-overlay="' . $tour_overlay . '" ';
+		$data_attr .= 'data-autoaction="' . $action_auto . '" ';
+		$data_attr .= 'data-hotspotviewport="' . $hotspot_viewport . '" ';
 
 		return $data_attr;
 
@@ -1696,16 +1751,16 @@ class Hotspot extends Common_Widget {
 					$hotspot_glow = '';
 
 					if ( ! empty( $item['marker_link']['url'] ) ) {
-						$this->add_render_attribute( 'url', 'href', $item['marker_link']['url'] );
+						$this->add_render_attribute( 'url-' . $item['_id'], 'href', $item['marker_link']['url'] );
 
 						if ( $item['marker_link']['is_external'] ) {
-							$this->add_render_attribute( 'url', 'target', '_blank' );
+							$this->add_render_attribute( 'url-' . $item['_id'], 'target', '_blank' );
 						}
 
 						if ( ! empty( $item['marker_link']['nofollow'] ) ) {
-							$this->add_render_attribute( 'url', 'rel', 'nofollow' );
+							$this->add_render_attribute( 'url-' . $item['_id'], 'rel', 'nofollow' );
 						}
-						$link = $this->get_render_attribute_string( 'url' );
+						$link = $this->get_render_attribute_string( 'url-' . $item['_id'] );
 					}
 
 					$this->add_render_attribute(
@@ -1787,7 +1842,7 @@ class Hotspot extends Common_Widget {
 				</div>
 			<?php endif; ?>
 
-			<?php if ( 'yes' == $settings['hotspot_tour'] && 'yes' == $settings['hotspot_tour_autoplay'] && 'yes' == $settings['hotspot_tooltip_data'] ) { ?>
+			<?php if ( 'yes' == $settings['hotspot_tour'] && 'yes' == $settings['hotspot_tour_autoplay'] && 'yes' == $settings['hotspot_tooltip_data'] && 'click' == $settings['autoplay_options'] ) { ?>
 				<?php
 					$this->add_render_attribute( 'button', 'class', 'elementor-button' );
 				if ( ! empty( $settings['overlay_button_size'] ) ) {
@@ -1829,6 +1884,7 @@ class Hotspot extends Common_Widget {
 				var animation		= settings.tooltip_anim;
 				var zindex			= ( 'yes' == settings.hotspot_tooltip_adv ) ? settings.zindex : 99;
 				var interval_val 	= settings.tour_interval.size;
+				var action_auto   	= ( 'auto' == settings.autoplay_options ) ? 'auto' : '';
 
 				var delay			= 300;
 
@@ -1847,7 +1903,8 @@ class Hotspot extends Common_Widget {
 
 					if ( 'yes' == settings.hotspot_tour_autoplay ) {
 						tour_autoplay = 'yes';
-						tour_overlay = 'yes';
+						tour_overlay = ( 'click' == settings.autoplay_options ) ? 'yes' : 'no';
+
 						if ( 'yes' == settings.hotspot_tour_repeat ) {
 							tour_repeat = 'yes';
 						} else {
@@ -1880,6 +1937,7 @@ class Hotspot extends Common_Widget {
 					data_attr += 'data-repeat="' + tour_repeat + '" ';
 					data_attr += 'data-tourinterval="' + tour_interval + '" ';
 					data_attr += 'data-overlay="' + tour_overlay + '" ';
+					data_attr += 'data-autoaction="' + action_auto + '" ';
 
 				return data_attr;
 			}
@@ -1921,18 +1979,17 @@ class Hotspot extends Common_Widget {
 							}
 
 							if ( '' != item.marker_link.url ) {
-								view.addRenderAttribute( 'url', 'href', item.marker_link.url );
+								view.addRenderAttribute( 'url-' + item._id, 'href', item.marker_link.url );
 							}
-
 							#>
 
 							<# if ( '' != item.marker_link.url ) { #>
 								<# if ( 'yes' == settings.hotspot_tooltip_data ) { #>
 									<# if ( 'yes' != settings.hotspot_tour && 'hover' == settings.trigger ) { #>
-										<a {{{ view.getRenderAttributeString( 'url' ) }}}>
+										<a {{{ view.getRenderAttributeString( 'url-' + item._id ) }}}>
 									<# } #>
 								<# } else { #>
-									<a {{{ view.getRenderAttributeString( 'url' ) }}}>
+									<a {{{ view.getRenderAttributeString( 'url-' + item._id ) }}}>
 								<# } #>
 							<# } #>
 
@@ -1967,7 +2024,7 @@ class Hotspot extends Common_Widget {
 						}); #>
 					</div>
 				<# } #>
-				<# if( 'yes' == settings.hotspot_tour && 'yes' == settings.hotspot_tour_autoplay && 'yes' == settings.hotspot_tooltip_data ) { #>
+				<# if( 'yes' == settings.hotspot_tour && 'yes' == settings.hotspot_tour_autoplay && 'yes' == settings.hotspot_tooltip_data && 'click' == settings.autoplay_options ) { #>
 					<#
 						view.addRenderAttribute( 'button', 'class', 'elementor-button' );
 						if ( '' != settings.overlay_button_size ) {
